@@ -5,7 +5,6 @@ const secondlyMeasurementSchema = new Schema({
     timestamp: {
         type: Date,
         default: Date.now,
-        expires: 60,
         require: true
     },
     capacity: {

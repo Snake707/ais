@@ -21,11 +21,11 @@
     "typescript": "3.3.3"
   },
   "scripts": {
-    "dev": "react-scripts start",
+    "dev": "react-scripts --openssl-legacy-provider start",
     "start": "serve build",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "build": "react-scripts --openssl-legacy-provider build",
+    "test": "react-scripts test --openssl-legacy-provider --env=jsdom",
+    "eject": "react-scripts --openssl-legacy-provider eject"
   },
   "browserslist": [
     ">0.2%",

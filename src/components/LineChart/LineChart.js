@@ -5,12 +5,12 @@ import { Line } from "react-chartjs-2";
 import "./LineChart.css";
 
 const LineChart = props => {
-  const sensorName = props.sensorInFocus
-  const capacityFactor = 100000
-  const requestIntervall = 1000
+  const sensorName = props.sensorInFocus;
+  const capacityFactor = 100000;
+  const requestIntervall = 10000;
   const context = useThemeUI()
   const chartRef = React.createRef();
-  const [dataFilter, setDataFilter] = useState("day");
+  const [dataFilter, setDataFilter] = useState("minute");
   const [chartData, setChartData] = useState({
     labels: [],
     datasets: [{
@@ -20,18 +20,16 @@ const LineChart = props => {
       borderWidth: 2,
       backgroundColor: 'rgba(4, 214, 144, 0.1)',
       borderColor: 'rgba(4, 214, 143, 1)',
+      tension: 0
     }]
   });
   const options = {
     responsive: true,
     maintainAspectRatio: false,
-    animation: {
-      duration: 300,
-      easing: 'linear'
-    },
+    animation: false,
     elements: {
       point: {
-        radius: 0
+        radius: 2
       }
     },
     scales: {
@@ -55,10 +53,7 @@ const LineChart = props => {
           maxRotation: 0,
           minRotation: 0,
           callback: function (value) {
-            if (dataFilter === "minute") return new Date(value).toLocaleTimeString('en', { second: 'numeric' }) + 's';
-            if (dataFilter === "hour") return new Date(value).toLocaleTimeString('en', { minute: 'numeric' }) + 'min';
-            if (dataFilter === "day") return new Date(value).toLocaleTimeString('en', { hour: 'numeric' });
-            if (dataFilter === "week") return new Date(value).toLocaleDateString('en', { day: 'numeric', month: 'short' });
+            return Math.round(((new Date()).getTime() - (new Date(value)).getTime()) / 1000) + 's';
           },
         },
       }]
@@ -67,12 +62,13 @@ const LineChart = props => {
       display: false,
     },
     tooltips: {
-      enabled: false,
+      enabled: true,
     },
   };
 
   useEffect(() => {
     const loadData = () => {
+      console.log(`${process.env.REACT_APP_BACKEND_URL}`);
       fetch(`${process.env.REACT_APP_BACKEND_URL}/measurements/${dataFilter}/${sensorName}`)
         .then(res => res.json())
         .then(

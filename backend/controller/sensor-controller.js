@@ -18,5 +18,4 @@ exports.irrigation = async (req, res, next) => {
         res.status(500);
         res.json("Failed");
     }
-
 };

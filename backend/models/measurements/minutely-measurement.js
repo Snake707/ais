@@ -5,7 +5,6 @@ const minutelyMeasurementSchema = new Schema({
     timestamp: {
         type: Date,
         default: Date.now,
-        expires: 3600,
         require: true
     },
     capacity: {

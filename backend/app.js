@@ -17,13 +17,11 @@ dotenv.config({ path: (__dirname, './.env')});
 // Mongoose Configs
 mongoose.Promise = global.Promise;
 const uri = process.env.MONGO_DB;
-mongoose.connect(uri, {
-    useMongoClient: true
-  })
+mongoose.connect(uri)
   .then(() => {
     console.log('Connection to database!')
   })
-  .catch(() => {
+  .catch((err) => {
     console.log('Connection to database failed!')
   })
 
